@@ -1,0 +1,126 @@
+<app-banner [page]="page"></app-banner>
+<div class="container py-5">
+    <div class="row pt-5">
+        <div class="col-lg-8">
+            <div class="d-flex flex-column text-left mb-3">
+                <p class="section-title pr-5">
+                    <span class="pr-2">Course Detail Page</span>
+                </p>
+                <h1 class="mb-3">Course name: {{course?.courseName}}</h1>
+
+            </div>
+            <div class="mb-5">
+                <img class="img-fluid rounded 200px mb-4" [src]="course?.avatar" />
+                <h5>
+                    Description: </h5>
+                <h6 style="color: black;"> {{course?.description}}</h6>
+
+                <h5>
+                    Duration: </h5>
+                <h6 style="color: black;"> {{course?.duration}}</h6>
+
+            </div>
+
+
+        </div>
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <!-- Author Bio -->
+            <div class="d-flex flex-column text-center bg-primary rounded mb-5 py-5 px-4">
+                <img [src]="course?.teacherId?.avatar" class="img-fluid rounded-circle mx-auto mb-3"
+                    style="width: 150px" />
+                <h3 class="text-secondary mb-3">Teacher
+                     <h3 style="color: black;">{{course?.teacherId?.firstName}} {{course?.teacherId?.lastName}}</h3>
+                    </h3>
+                <h6 class="text-white m-0">
+                    Speciality: {{course?.teacherId?.speciality}}
+                </h6>
+            </div>
+
+        </div>
+
+
+    </div>
+    <h6 *ngIf="connectedUser() && user.role=='teacher'">Students and Evaluations: </h6>
+    <table class="table custom-table " *ngIf="connectedUser() && user.role=='teacher'">
+        <tr>
+            <th>Student </th>
+            <th>AddOrEditNote </th>
+            <th>Note </th>
+            <th>Evaluation </th>
+        </tr>
+        <tr *ngFor="let student of course?.students">
+            <td>{{student?.studentId.firstName}} {{student?.studentId.lastName}}</td>
+
+            <td *ngIf="!showForm || selectedStudent !== student">
+                <button class="btn btn-secondary" (click)="showNoteForm(student)">Add/Edit</button>
+            </td>
+            <td *ngIf="showForm && selectedStudent == student">
+                <form #noteForm="ngForm" (ngSubmit)="addNote(student.studentId._id)">
+                    <input type="number" [(ngModel)]="obj.note" placeholder="Note" name="note" #note="ngModel" required
+                        style="width: 100px;">
+                    <div *ngIf="noteForm.submitted && note.invalid" class="invalidfeedback">
+                        <div *ngIf="note.errors.required" style="color: red;">Note is required</div>
+                        <div style="color: red;">{{ noteError }}</div>
+                    </div>
+                    <button class="btn btn-secondary">Ok</button>
+                </form>
+            </td>
+            <td>
+                {{student.note}}
+            </td>
+            <td
+                [ngStyle]="{'color': student.evaluation == 'Verry Good' ? 'green' : (student.evaluation == 'Good' ? 'orange' : 'red')}">
+                {{ student.evaluation }}
+            </td>
+
+
+
+        </tr>
+
+    </table>
+    <!-- Search Form -->
+    <div class="mb-5 mt-5" *ngIf="connectedUser() && user.role == 'admin'">
+        <form>
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Student name..." [(ngModel)]="term"
+                    name="search" />
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="widget-next-match " *ngIf="connectedUser() && user.role == 'admin'">
+        <table class="table custom-table ">
+            <thead>
+                <tr>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Tel</th>
+                    <th>Email</th>
+                    <th>Courses</th>
+                    <th>Affect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of users | customFilter:term">
+                    <td>{{student.firstName}}</td>
+                    <td>{{student.lastName}}</td>
+                    <td>{{student.tel}}</td>
+                    <td>{{student.email}}</td>
+                    <td><span *ngFor="let course of student?.studentCourses">
+                            {{course?.courseId?.courseName}} <br>
+                        </span></td>
+                    <td>
+                        <button class="btn btn-success" (click)="affectToCourse(student._id)"> Affect</button>
+                        <h6 style="color: green;"> {{successMessages[student._id]}}</h6>
+                        <h6 style="color: red;"> {{errorMessages[student._id]}}</h6>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

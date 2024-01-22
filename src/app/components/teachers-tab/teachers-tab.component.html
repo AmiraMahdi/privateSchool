@@ -1,0 +1,37 @@
+<div class="widget-next-match ">
+    <table class="table custom-table ">
+      <thead>
+        <tr>
+          <th>FirstName</th>
+          <th>LastName</th>
+          <th>Tel</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Speciality</th>
+          <th>Courses</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr *ngFor="let user of users">
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.tel}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.status}}</td>
+          <td>{{user.speciality}}</td>
+          <td><span *ngFor="let course of user.courses">
+          {{course.courseName}} <br>
+          </span></td>
+          <td>
+            <button class="btn btn-warning" (click)="goToEdit(user._id)" >Edit</button>
+            <button class="btn btn-danger" (click)="deleteUser(user._id)">Delete</button>
+            <button class="btn btn-secondary" (click)="goToDisplay(user._id)">Display</button>
+            <button class="btn btn-success" (click)="validateTeacher(user._id)" *ngIf="user.status=='notValidated'">Validate</button>
+          </td>
+        </tr>
+        
+        
+      </tbody>
+    </table>
+  </div>

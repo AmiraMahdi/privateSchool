@@ -1,0 +1,35 @@
+<div class="widget-next-match ">
+    <table class="table custom-table ">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Tel</th>
+                <th>Child-Tel</th>
+                <th>Children</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let user of users">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.tel}}</td>
+                <td>{{user.childTel}}</td>
+                <td><span *ngFor="let child of user.children">
+                    {{child.firstName}}{{child.lastName}}<br>
+                  </span></td>
+                <td>{{user.email}}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="goToEdit(user._id)">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteUser(user._id)">Delete</button>
+                    <button class="btn btn-secondary" (click)=goToDisplay(user._id)>Display</button>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</div>

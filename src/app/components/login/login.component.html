@@ -1,0 +1,39 @@
+<app-banner [page]="page"></app-banner>
+
+<div class="container-fluid">
+    <div class="container">
+
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+
+            <div class="form-group">
+                <input type="tel" class="form-control" placeholder="Phone number" name="tel" [(ngModel)]="obj.tel"
+                    #tel="ngModel" required pattern="[0-9]{8}">
+                <div *ngIf="loginForm.submitted && tel.invalid" class="invalidfeedback">
+                    <div *ngIf="tel.errors.required" style="color: red;">Phone number is required</div>
+                    <div *ngIf="tel.errors.pattern" style="color: red;">Invalid phone number</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" name="password"
+                    [(ngModel)]="obj.password" #password="ngModel" required minlength="4">
+                <div *ngIf="loginForm.submitted && password.invalid " class="invalidfeedback">
+                    <div *ngIf="password.errors.required" style="color: red;">Password is required </div>
+                    <div *ngIf="password.errors.minlength" style="color: red;">Password must be at least 4
+                        characters</div>
+                </div>
+
+            </div>
+            <div class="text-center mb-3">
+                <h6 style="color: red;">{{erreur}}</h6>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary py-3 px-5" value="Login" [disabled]="!loginForm.valid">
+
+            </div>
+
+
+
+        </form>
+
+    </div>
+</div>

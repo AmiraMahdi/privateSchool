@@ -1,0 +1,47 @@
+<app-banner [page]="page"></app-banner>
+<div class="container-fluid" style="margin-top: 20px;" *ngIf="connectedUser() && user.role=='admin'">
+    <div class="container">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs justify-content-center" id="myTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="admins-tab" data-toggle="tab" href="#admins" role="tab"
+                    aria-controls="admins" aria-selected="true">Admins</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="teachers-tab" data-toggle="tab" href="#teachers" role="tab"
+                    aria-controls="teachers" aria-selected="false">Teachers</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab"
+                    aria-controls="students" aria-selected="false">Students</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="parents-tab" data-toggle="tab" href="#parents" role="tab"
+                    aria-controls="parents" aria-selected="false">Parents</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="courses-tab" data-toggle="tab" href="#courses" role="tab"
+                    aria-controls="courses" aria-selected="false">Courses</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="admins" role="tabpanel">
+                <app-admins-tab></app-admins-tab>
+            </div>
+            <div class="tab-pane" id="teachers" role="tabpanel">
+                <app-teachers-tab></app-teachers-tab>
+            </div>
+            <div class="tab-pane" id="students" role="tabpanel">
+                <app-students-tab></app-students-tab>
+            </div>
+            <div class="tab-pane" id="parents" role="tabpanel">
+                <app-parents-tab></app-parents-tab>
+            </div>
+            <div class="tab-pane" id="courses" role="tabpanel">
+                <app-courses-tab></app-courses-tab>
+            </div>
+        </div>
+    </div>
+
+</div>

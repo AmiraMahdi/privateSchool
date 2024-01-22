@@ -1,0 +1,181 @@
+<app-banner [page]="page"></app-banner>
+
+<div class="container-fluid">
+    <div class="container">
+        <form [formGroup]="signupForm">
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="firstName" placeholder="First Name"
+                    [(ngModel)]="userObj.firstName">
+            </div>
+            <div *ngIf="signupForm.controls['firstName'].invalid &&
+             (signupForm.controls['firstName'].touched ||
+               signupForm.controls['firstName'].dirty)">
+                <div *ngIf="signupForm.controls['firstName'].errors.required" style="color: red;">
+                    FirstName is required </div>
+                <div *ngIf="signupForm.controls['firstName'].errors.minlength" style="color: red;">
+                    FirstName should have at least 3 chars</div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control p-4" placeholder="LastName" formControlName="lastName"
+                    [(ngModel)]="userObj.lastName">
+            </div>
+            <div *ngIf="signupForm.controls['lastName'].invalid &&
+          (signupForm.controls['lastName'].touched ||
+            signupForm.controls['lastName'].dirty)">
+                <div *ngIf="signupForm.controls['lastName'].errors.required" style="color: red;">
+                    LastName is required </div>
+                <div *ngIf="signupForm.controls['lastName'].errors.minlength" style="color: red;">
+                    LastName should have at least 4 chars</div>
+            </div>
+            <div class="form-group">
+                <select class="custom-select px-4" style="height: 47px" name="gender" formControlName="gender"
+                    [(ngModel)]="userObj.gender">
+                    <option value="">Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+
+                </select>
+
+            </div>
+            <div *ngIf="signupForm.controls['gender'].invalid &&
+                  signupForm.controls['gender'].touched">
+                <div *ngIf="signupForm.controls['gender'].errors.required" style="color: red;">
+                    Gender is required </div>
+
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control p-4" placeholder="Address" formControlName="address"
+                    [(ngModel)]="userObj.address">
+            </div>
+            <div *ngIf="signupForm.controls['address'].invalid &&
+           (signupForm.controls['address'].touched ||
+              signupForm.controls['address'].dirty)">
+                <div *ngIf="signupForm.controls['address'].errors.required" style="color: red;">
+                    Address is required </div>
+                <div *ngIf="signupForm.controls['address'].errors.minlength" style="color: red;">
+                    Address should have at least 3 carac</div>
+            </div>
+
+            <div class="form-group">
+                <input type="tel" class="form-control p-4" placeholder="Phone number" formControlName="tel"
+                    [(ngModel)]="userObj.tel">
+            </div>
+            <div *ngIf="signupForm.controls['tel'].invalid &&
+              (signupForm.controls['tel'].touched ||
+              signupForm.controls['tel'].dirty)">
+                <div *ngIf="signupForm.controls['tel'].errors.required" style="color: red;">
+                    Phone number is required
+                </div>
+                <div *ngIf="signupForm.controls['tel'].hasError('pattern')" style="color: red;">
+                    Please enter a valid phone number</div>
+            </div>
+            <!-- input only for parent -->
+            <div *ngIf="path == '/signupParent'">
+
+                <div class="form-group">
+                    <input type="tel" class="form-control p-4" placeholder="Child's phone number"
+                        formControlName="childTel">
+                </div>
+                <div *ngIf=" signupForm.controls['childTel'].invalid &&
+               (signupForm.controls['childTel'].touched ||
+               signupForm.controls['childTel'].dirty)">
+                    <div *ngIf="signupForm.controls['childTel'].errors.required" style="color: red;">
+                        Child's phone number is required
+                    </div>
+                    <div *ngIf="signupForm.controls['childTel'].hasError('pattern')" style="color: red;">
+                        Please enter a valid phone number</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control p-4" placeholder="Email" formControlName="email"
+                    [(ngModel)]="userObj.email">
+            </div>
+            <div *ngIf="signupForm.controls['email'].invalid &&
+               (signupForm.controls['email'].touched ||
+                 signupForm.controls['email'].dirty)">
+                <div *ngIf="signupForm.controls['email'].errors.required" style="color: red;">
+                    Email is required
+                </div>
+                <div *ngIf="signupForm.controls['email'].errors.email" style="color: red;">
+                    Please enter a valid email</div>
+            </div>
+            <!-- input only for teacher -->
+            <div *ngIf="path == '/signupTeacher' || userObj.role == 'teacher'">
+                <div class="form-group">
+                    <input type="text" class="form-control p-4" placeholder="Speciality" formControlName="speciality"
+                        [(ngModel)]="userObj.speciality">
+                </div>
+                <div *ngIf="signupForm.controls['speciality'].invalid &&
+               signupForm.controls['speciality'].touched">
+                    <div *ngIf="signupForm.controls['speciality'].errors.required" style="color: red;">
+                        Speciality is required </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h6 *ngIf="page=='Edit Profile'" style="color: red;">
+                    You should enter your password first!!
+                </h6>
+                <input type="password" class="form-control p-4" placeholder="Password" formControlName="password"
+                    [(ngModel)]="userObj.password">
+            </div>
+            <div *ngIf="
+                signupForm.controls['password'].invalid &&
+                (signupForm.controls['password'].touched ||
+                  signupForm.controls['password'].dirty)
+              ">
+                <div *ngIf="signupForm.controls['password'].errors.required" style="color: red;">
+                    Password is required
+                </div>
+
+                <div *ngIf="signupForm.get('password').hasError('pattern')" style="color: red;">
+                    Password must contain at least one uppercase letter, one lowercase letter, one digit, and one
+                    special character (!@#$%^&*)
+                </div>
+            </div>
+           
+
+            <div class="form-group" style="visibility: hidden;">
+                <input type="file" class="form-control" #filePickerImg (change)='onImageSelected($event)'>
+            </div>
+            <div class="text-center mb-3">
+                <button class="btn btn-success" (click)="filePickerImg.click()"> Select Your Avatar</button> <br>
+                <img *ngIf="imagePreview" [src]="imagePreview" class="mt-2 mb-2" width="200px">
+                <h6 style="color: green;">{{msgImg}}</h6>
+            </div>
+
+            <div *ngIf="path == '/signupTeacher'|| userObj.role == 'teacher'">
+                <div class="form-group" style="visibility: hidden;">
+                    <input type="file" class="form-control" accept=".pdf" #filePickerDoc
+                        (change)='onFileSelected($event)'>
+                </div>
+                <div class="text-center mb-3">
+                    <button class="btn btn-success" (click)="filePickerDoc.click()"> Upload your CV (PDF only):
+                    </button>
+                    <br>
+                    <iframe *ngIf="teacherCV" type="application/pdf" [src]="teacherCV" class="mt-2 mb-2" width="200px"
+                        height="300px"></iframe>
+                    <h6 style="color: green;">{{msgDoc}}</h6>
+
+                </div>
+            </div>
+
+            <div class="text-center mb-3">
+                <h6 style="color: red;">{{msgError}}</h6>
+            </div>
+
+            <div class="text-center mb-3">
+                <button type="submit" class="btn btn-secondary btn-block py-3" (click)="signupOrEdit()"
+                    [disabled]="!signupForm.valid">{{page}}</button>
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+</div>

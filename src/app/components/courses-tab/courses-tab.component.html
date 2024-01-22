@@ -1,0 +1,52 @@
+<div class="widget-next-match ">
+    <table class="table custom-table ">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Duration</th>
+                <th>Teacher</th>
+                <th>Description</th>
+                <th>Students</th>
+                <th>Actions</th>
+                
+            </tr>
+        </thead>
+        <tbody *ngFor="let course of courses">
+            <tr>
+                <td>{{course.courseName}} </td>
+                <td>{{course.duration}}</td>
+                <td>{{course.teacherId.firstName}} {{course.teacherId.lastName}}</td>
+                <td>{{course.description}}</td>
+                <td><button class="btn btn-info" (click)="toggleStudents()">Students</button></td>
+                <td>
+                    <button class="btn btn-warning" (click)="goToEdit(course._id)">Edit</button>
+                    <button class="btn btn-secondary" (click)="goToDisplay(course._id)">Display</button>
+                    <button class="btn btn-danger" (click)="deleteCourse(course._id)">Delete</button>
+
+                </td>
+
+            </tr>
+
+            <tr *ngIf="showStudents" >
+                <td colspan="3">
+                    <strong>Students:</strong>
+                </td>
+                <td><strong>Note</strong></td>
+                <td colspan="2"><strong>Evaluation</strong></td>
+            </tr>
+            <tr *ngFor="let student of course.students">
+                <td colspan="3"  *ngIf="showStudents" style="color: blue;">
+                    {{ student.studentId.firstName }} {{ student.studentId.lastName }}
+                </td>
+                <td *ngIf="showStudents" style="color: blue;">
+                    {{ student.note }}
+                </td>
+                <td colspan="2" *ngIf="showStudents" [ngStyle]="{'color': student.evaluation == 'Verry Good' ? 'green' : (student.evaluation == 'Good' ? 'orange' : 'red')}">
+                    {{ student.evaluation }}
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+</div>

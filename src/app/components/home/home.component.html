@@ -1,0 +1,40 @@
+
+<app-info></app-info>
+<app-quotes></app-quotes>
+<!-- Class Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2">Popular Courses</span>
+            </p>
+            <h1 class="mb-4">Courses for Your Kids</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-5" *ngFor="let course of lastCourses">
+                <app-single-course [course]="course"></app-single-course>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Class End -->
+<!-- teacher start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5">
+                <span class="px-2">Popular Teachers</span>
+            </p>
+            <h1 class="mb-4">Meet same of our Teachers</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 text-center team mb-5" *ngFor="let teacher of lastTeachers">
+                <app-single-teacher [teacher]="teacher"></app-single-teacher>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- teacher end -->
+<app-quotes></app-quotes>
